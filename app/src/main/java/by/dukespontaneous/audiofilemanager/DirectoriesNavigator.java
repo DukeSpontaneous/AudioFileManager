@@ -2,14 +2,13 @@ package by.dukespontaneous.audiofilemanager;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.util.Stack;
 
 public class DirectoriesNavigator {
     @NonNull
-    private File currentDir = null;
+    private File currentDir;
     private final Stack<File> stack = new Stack<>();
 
     public DirectoriesNavigator(File currentDir) {
@@ -39,10 +38,13 @@ public class DirectoriesNavigator {
         this.currentDir = dir;
     }
 
-    @Nullable
     public File goBack() {
-        currentDir = stack.size() != 0 ? stack.pop() : null;
+        currentDir = stack.size() != 0 ? stack.pop() : currentDir;
         return currentDir;
+    }
+
+    public boolean hasDirectories() {
+        return stack.size() > 0;
     }
 
     public String getRelativePath (File file) {

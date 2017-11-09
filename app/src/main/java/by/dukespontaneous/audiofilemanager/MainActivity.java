@@ -72,16 +72,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void guiUpdate() {
-
         File dir = navigator.getCurrentDir();
 
         textView.setText(dir.getAbsolutePath());
 
-        List<File> output = FileHelper.getDirectoryAudioList(dir);
-
+        List<File> audioList = FileHelper.getDirectoryAudioList(dir);
         guiFilesList.clear();
-        guiFilesList.addAll(output);
-
+        guiFilesList.addAll(audioList);
         filesAdapter.notifyDataSetChanged();
     }
 
@@ -137,11 +134,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onBackPressed() {
-        if (navigator.goBack() == null)
+        if (navigator.hasDirectories() == false) {
             super.onBackPressed();
-        else
+        } else {
+            navigator.goBack();
             guiUpdate();
+        }
     }
 }

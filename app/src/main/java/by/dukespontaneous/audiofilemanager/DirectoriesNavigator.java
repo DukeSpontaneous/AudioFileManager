@@ -27,9 +27,8 @@ public class DirectoriesNavigator {
         this(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getPath());
     }
 
-
-    public String getCurrentDir() {
-        return currentDir.getAbsolutePath();
+    public File getCurrentDir() {
+        return currentDir;
     }
 
     public void goInto(File dir) {

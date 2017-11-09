@@ -2,10 +2,7 @@ package by.dukespontaneous.audiofilemanager;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,18 +15,13 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
-    private final DirectoriesNavigator navigator = new DirectoriesNavigator();
+    private static final DirectoriesNavigator navigator = new DirectoriesNavigator();
 
     private final List<File> guiFilesList = new ArrayList<>();
     private ArrayAdapter<File> filesAdapter;
@@ -81,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void guiUpdate() {
 
-        String dir = navigator.getCurrentDir();
+        File dir = navigator.getCurrentDir();
 
-        textView.setText(dir);
+        textView.setText(dir.getAbsolutePath());
 
-        List<File> output = AudioHelper.getDirectoryAudioList(new File(dir), getContentResolver());
+        List<File> output = FileHelper.getDirectoryAudioList(dir);
 
         guiFilesList.clear();
         guiFilesList.addAll(output);
